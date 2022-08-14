@@ -31,19 +31,16 @@ let osPlat: string = os.platform();
 let osArch: string = os.arch();
 
 interface IProtocRelease {
-  tag_name: string;
-  prerelease: boolean;
+  name: string;
 }
 
 export async function getProtoc(
   version: string,
-  includePreReleases: boolean,
   repoToken: string
 ) {
   // resolve the version number
   const targetVersion = await computeVersion(
     version,
-    includePreReleases,
     repoToken
   );
   if (targetVersion) {
@@ -137,7 +134,6 @@ function getFileName(version: string): string {
 
 // Retrieve a list of versions scraping tags from the Github API
 async function fetchVersions(
-  includePreReleases: boolean,
   repoToken: string
 ): Promise<string[]> {
   let rest: restm.RestClient;
@@ -153,7 +149,7 @@ async function fetchVersions(
   for (let pageNum = 1, morePages = true; morePages; pageNum++) {
     let nextPage: IProtocRelease[] =
       (await rest.get<IProtocRelease[]>(
-        "https://api.github.com/repos/protocolbuffers/protobuf/releases?page=" +
+        "https://api.github.com/repos/protocolbuffers/protobuf/tags?page=" +
           pageNum
       )).result || [];
     if (nextPage.length > 0) {
@@ -164,15 +160,13 @@ async function fetchVersions(
   }
 
   return tags
-    .filter(tag => tag.tag_name.match(/v\d+\.[\w\.]+/g))
-    .filter(tag => includePrerelease(tag.prerelease, includePreReleases))
-    .map(tag => tag.tag_name.replace("v", ""));
+    .filter(tag => tag.name.match(/v\d+\.[\w\.]+/g))
+    .map(tag => tag.name.replace("v", ""));
 }
 
 // Compute an actual version starting from the `version` configuration param.
 async function computeVersion(
   version: string,
-  includePreReleases: boolean,
   repoToken: string
 ): Promise<string> {
   // strip leading `v` char (will be re-added later)
@@ -185,8 +179,9 @@ async function computeVersion(
     version = version.slice(0, version.length - 2);
   }
 
-  const allVersions = await fetchVersions(includePreReleases, repoToken);
-  const validVersions = allVersions.filter(v => semver.valid(v));
+  const allVersions = await fetchVersions(repoToken);
+  core.debug(`fetch ${allVersions} versions`);
+  const validVersions = allVersions;
   const possibleVersions = validVersions.filter(v => v.startsWith(version));
 
   const versionMap = new Map();
