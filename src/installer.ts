@@ -8,7 +8,7 @@ import * as restm from "typed-rest-client/RestClient";
 import * as semver from "semver";
 
 if (!tempDirectory) {
-  let baseLocation;
+  let baseLocation: string;
   if (process.platform === "win32") {
     // On windows use the USERPROFILE env variable
     baseLocation = process.env["USERPROFILE"] || "C:\\";
@@ -241,11 +241,4 @@ function normalizeVersion(version: string): string {
   }
 
   return version;
-}
-
-function includePrerelease(
-  isPrerelease: boolean,
-  includePrereleases: boolean
-): boolean {
-  return includePrereleases || !isPrerelease;
 }
