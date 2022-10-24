@@ -1,10 +1,10 @@
-name: 'Setup protoc'
+name: 'Setup protoc binary'
 description: 'Download protoc compiler and add it to the PATH'
-author: 'Arduino'
+author: 'zchee'
 inputs:
   version:
-    description: 'Version to use. Example: 3.9.1'
-    default: '3.x'
+    description: 'Version to use.'
+    default: '21.x'
   repo-token:
     description: 'GitHub repo token to use to avoid rate limiter'
     default: ''
