@@ -4,7 +4,7 @@ author: 'zchee'
 inputs:
   version:
     description: 'Version to use.'
-    default: '21.x'
+    default: '21.8'
   repo-token:
     description: 'GitHub repo token to use to avoid rate limiter'
     default: ''
