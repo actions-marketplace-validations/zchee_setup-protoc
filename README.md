@@ -13,15 +13,6 @@ To get the latest stable version of `protoc` just add this step:
   uses: zchee/setup-protoc@v1
 ```
 
-If you want to pin a major or minor version you can use the `.x` wildcard:
-
-```yaml
-- name: Install Protoc
-  uses: zchee/setup-protoc@v1
-  with:
-    version: '21.x'
-```
-
 To pin the exact version:
 
 ```yaml
