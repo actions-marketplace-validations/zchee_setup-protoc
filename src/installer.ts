@@ -96,12 +96,18 @@ async function downloadRelease(version: string): Promise<string> {
   );
   process.stdout.write("Downloading archive: " + downloadUrl + os.EOL);
 
-  let downloadPath: string | null = null;
+  let downloadPath = '';
   try {
     downloadPath = await tc.downloadTool(downloadUrl);
   } catch (error) {
-    core.debug(error);
-    throw `Failed to download version ${version}: ${error}`;
+    let message = `Failed to download version ${version}: ${error}`;
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    if (typeof error === 'string') {
+      message = error;
+    }
+    core.debug(message);
   }
 
   // Extract

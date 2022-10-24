@@ -7,7 +7,14 @@ async function run() {
     let repoToken = core.getInput("repo-token");
     await installer.getProtoc(version, repoToken);
   } catch (error) {
-    core.setFailed(error.message);
+    let message = 'Unknown error!';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    if (typeof error === 'string') {
+      message = error;
+    }
+    core.setFailed(message);
   }
 }
 
