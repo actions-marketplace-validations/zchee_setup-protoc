@@ -5,15 +5,12 @@ inputs:
   version:
     description: 'Version to use. Example: 3.9.1'
     default: '3.x'
-  include-pre-releases:
-    description: 'Include github pre-releases in latest version calculation'
-    default: 'false'
   repo-token:
     description: 'GitHub repo token to use to avoid rate limiter'
     default: ''
 runs:
-  using: 'node12'
-  main: 'lib/main.js'
+  using: 'node16'
+  main: 'dist/index.js'
 branding:
   icon: 'box'
   color: 'green'
