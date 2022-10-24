@@ -1,6 +1,6 @@
 # setup-protoc
 
-![test](https://github.com/arduino/setup-protoc/workflows/test/badge.svg)
+![test](https://github.com/zchee/setup-protoc/workflows/test/badge.svg)
 
 This action makes the `protoc` compiler available to Workflows.
 
@@ -10,35 +10,25 @@ To get the latest stable version of `protoc` just add this step:
 
 ```yaml
 - name: Install Protoc
-  uses: arduino/setup-protoc@v1
+  uses: zchee/setup-protoc@v1
 ```
 
 If you want to pin a major or minor version you can use the `.x` wildcard:
 
 ```yaml
 - name: Install Protoc
-  uses: arduino/setup-protoc@v1
+  uses: zchee/setup-protoc@v1
   with:
-    version: '3.x'
-```
-
-You can also require to include releases marked as `pre-release` in Github using the `include-pre-releases` flag (the dafault value for this flag is `false`)
-
-```yaml
-- name: Install Protoc
-  uses: arduino/setup-protoc@v1
-  with:
-    version: '3.x'
-    include-pre-releases: true
+    version: '21.x'
 ```
 
 To pin the exact version:
 
 ```yaml
 - name: Install Protoc
-  uses: arduino/setup-protoc@v1
+  uses: zchee/setup-protoc@v1
   with:
-    version: '3.9.1'
+    version: '21.8'
 ```
 
 The action queries the GitHub API to fetch releases data, to avoid rate limiting,
@@ -46,7 +36,7 @@ pass the default token with the `repo-token` variable:
 
 ```yaml
 - name: Install Protoc
-  uses: arduino/setup-protoc@v1
+  uses: zchee/setup-protoc@v1
   with:
     repo-token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -92,13 +82,3 @@ Action the workflow should be the following:
 1. After PR is merged, create a release, following the `vX.X.X` tag name convention.
 1. After the release, rebase the release branch for that major version (e.g., `v1` branch for the v1.x.x tags) on the tag.
    If no branch exists for the release's major version, create one.
-
-
-
-## Security
-
-If you think you found a vulnerability or other security-related bug in this project, please read our
-[security policy](https://github.com/arduino/setup-protoc/security/policy) and report the bug to our Security Team 🛡️
-Thank you!
-
-e-mail contact: security@arduino.cc
