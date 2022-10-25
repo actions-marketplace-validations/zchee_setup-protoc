@@ -9,7 +9,7 @@
     "npm": ">=8.0"
   },
   "scripts": {
-    "build": "tsc && ncc build -o dist src/main.ts",
+    "build": "tsc && ncc build --minify -o dist src/main.ts",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "test": "jest --coverage"
